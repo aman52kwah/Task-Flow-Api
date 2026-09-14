@@ -4,11 +4,11 @@ public class Task {
     private  int id;
     private String title;
     private String description;
-    private  boolean status;  // Values: "TODO", "IN_PROGRESS", "COMPLETED"
+    private   TaskStatus status;  // Values: "TODO", "IN_PROGRESS", "COMPLETED"
 
     public Task(){};
 
-    public Task(int id, String title, String description, boolean status){
+    public Task(int id, String title, String description, TaskStatus status){
         this.id = id;
         this.title = title;
         this.description = description;
@@ -28,7 +28,7 @@ public class Task {
         return  description;
     }
 
-    public boolean getStatus(){
+    public TaskStatus getStatus(){
         return status;
     }
 
@@ -45,7 +45,7 @@ public class Task {
         return  this.description = description;
     }
 
-    public boolean isStatus(boolean status){
+    public TaskStatus  setStatus(TaskStatus status){
       return   this.status = status;
     }
 }
