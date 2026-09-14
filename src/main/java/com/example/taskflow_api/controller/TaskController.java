@@ -26,4 +26,19 @@ public class TaskController {
     public List<Task> getAllTask(){
         return tasks;
     }
+
+    //GET END POINT FOR SINGLE SEARCH
+    // this binds the  variable {id}in the URL Path
+    @GetMapping("/{id}")
+    public Task getTaskById(@PathVariable int id){
+        return tasks.stream()
+                .filter(task -> task.getId() == id)
+                .findFirst()
+                .orElse(null);
+
+    }
+
+
 }
+
+
