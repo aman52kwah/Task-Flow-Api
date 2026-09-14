@@ -37,6 +37,15 @@ public class TaskController {
                 .orElse(null);
 
     }
+    @PostMapping
+
+    //@RequestBody instructs Spring Boot to read the incoming
+    // JSON payload from the request body and deserialize it directly into a Java Task object
+    public  Task createTask(@RequestBody Task task){
+        task.setId((int) (tasks.size() + 1));
+        tasks.add(task);
+        return task;
+    }
 
 
 }
