@@ -2,6 +2,7 @@ package com.example.taskflow_api.controller;
 
 import com.example.taskflow_api.model.Task;
 import com.example.taskflow_api.model.TaskStatus;
+import com.example.taskflow_api.service.TaskService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -14,25 +15,62 @@ import java.util.List;
 @RequestMapping("/api/tasks")
 
 public class TaskController {
-    // moved to taskcontroller for business logic purposes
 
-//    private final List<Task> tasks = new ArrayList<>();
-//
-//    public TaskController(){
-//        // sample data for testing
-//        tasks.add(new Task(101,"Learn Spring and Spring Framework","understand Controllers and Rest API", TaskStatus.IN_PROGRESS));
-//        tasks.add(new Task(102,"Build TaskFlow API","Implement endpoints for managing task", TaskStatus.TODO));
-//    }
-   // @GetMapping
-    //public List<Task> getAllTask(){
-       // return tasks;
+
+    // declare private final dependency
+
+
+   private final  TaskService taskService;
+
+
+        // perform constructor injection
+        public  TaskController(TaskService taskService){
+            this.taskService = taskService;
+        }
+
+
+
+    @GetMapping
+    public List<Task> getAllTask(){
+        return taskService.getTasks();
     }
 
     //GET END POINT FOR SINGLE SEARCH
     // this binds the  variable {id}in the URL Path
-   // @GetMapping("/{id}")
+      @GetMapping("/{id}")
+   public Task getTaskById(@PathVariable int id){
+            return taskService.getTaskById(id);
+        }
 
-    //@PostMapping
+    @PostMapping
+    public Task createTask(@RequestBody Task task){
+            return taskService.createTask(task);
+    }
+
+    // Patch task status by id
+    @PatchMapping("/{id}/status")
+    public  Task updateTaskStatus(@PathVariable int id, @RequestParam TaskStatus status){
+            return taskService.updateTaskStatus(id,status);
+
+    }
+
+    // delete task by id
+    @DeleteMapping("/{id}")
+    public String deleteTask(@PathVariable int id){
+            boolean deleted = taskService.deleteTask(id);
+            if (deleted){
+                return "Task with ID "+ id + " deleted sucessfully";
+            }
+            return "Task not found.";
+    }
+
+
+
+
+}
+
+
+
 
     //@RequestBody instructs Spring Boot to read the incoming
     // JSON payload from the request body and deserialize it directly into a Java Task object
