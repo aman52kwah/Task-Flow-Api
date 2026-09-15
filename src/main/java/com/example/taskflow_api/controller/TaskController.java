@@ -14,40 +14,31 @@ import java.util.List;
 @RequestMapping("/api/tasks")
 
 public class TaskController {
+    // moved to taskcontroller for business logic purposes
 
-    private final List<Task> tasks = new ArrayList<>();
-
-    public TaskController(){
-        // sample data for testing
-        tasks.add(new Task(101,"Learn Spring and Spring Framework","understand Controllers and Rest API", TaskStatus.IN_PROGRESS));
-        tasks.add(new Task(102,"Build TaskFlow API","Implement endpoints for managing task", TaskStatus.TODO));
-    }
-    @GetMapping
-    public List<Task> getAllTask(){
-        return tasks;
+//    private final List<Task> tasks = new ArrayList<>();
+//
+//    public TaskController(){
+//        // sample data for testing
+//        tasks.add(new Task(101,"Learn Spring and Spring Framework","understand Controllers and Rest API", TaskStatus.IN_PROGRESS));
+//        tasks.add(new Task(102,"Build TaskFlow API","Implement endpoints for managing task", TaskStatus.TODO));
+//    }
+   // @GetMapping
+    //public List<Task> getAllTask(){
+       // return tasks;
     }
 
     //GET END POINT FOR SINGLE SEARCH
     // this binds the  variable {id}in the URL Path
-    @GetMapping("/{id}")
-    public Task getTaskById(@PathVariable int id){
-        return tasks.stream()
-                .filter(task -> task.getId() == id)
-                .findFirst()
-                .orElse(null);
+   // @GetMapping("/{id}")
 
-    }
-    @PostMapping
+    //@PostMapping
 
     //@RequestBody instructs Spring Boot to read the incoming
     // JSON payload from the request body and deserialize it directly into a Java Task object
-    public  Task createTask(@RequestBody Task task){
-        task.setId((int) (tasks.size() + 1));
-        tasks.add(task);
-        return task;
-    }
 
 
-}
+
+
 
 
