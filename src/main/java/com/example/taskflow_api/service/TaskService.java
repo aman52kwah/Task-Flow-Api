@@ -4,8 +4,10 @@ package com.example.taskflow_api.service;
 import com.example.taskflow_api.dto.CreateTaskRequest;
 import com.example.taskflow_api.model.Task;
 import com.example.taskflow_api.model.TaskStatus;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,7 @@ public class TaskService {
         return tasks.stream()
                 .filter(task -> task.getId() == id)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
 
     }
 
@@ -50,7 +52,7 @@ public class TaskService {
 
     // update task
     public Task updateTaskStatus(int id ,TaskStatus status){
-        Task task =getTaskById(id);
+        Task task =getTaskById(id);  // THIS TROWS 404 AUTOMATICALLY IF NOT FOUND
         if (task !=null){
             task.setStatus(status);
 
@@ -59,7 +61,7 @@ public class TaskService {
     }
 
     public boolean deleteTask(int id){
-        Task task = getTaskById(id);
+        Task task = getTaskById(id); // THIS TROWS 404 AUTOMATICALLY IF NOT FOUND
         if (task !=null){
             tasks.remove(task);
             return true;
