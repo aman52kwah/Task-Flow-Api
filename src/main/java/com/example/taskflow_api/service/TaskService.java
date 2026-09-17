@@ -1,6 +1,7 @@
 package com.example.taskflow_api.service;
 
 
+import com.example.taskflow_api.dto.CreateTaskRequest;
 import com.example.taskflow_api.model.Task;
 import com.example.taskflow_api.model.TaskStatus;
 import org.springframework.stereotype.Service;
@@ -39,10 +40,11 @@ public class TaskService {
     }
 
     // create tasks
-    public  Task createTask(Task task){
-        task.setId((int) (tasks.size() + 11));
-        tasks.add(task);
-        return task;
+    public  Task createTask(CreateTaskRequest request){
+     int newId = tasks.size() + 1;
+        Task newTask  = new Task(newId,request.getTitle(),request.getDescription(),TaskStatus.TODO);
+        tasks.add(newTask);
+        return newTask;
     }
 
 

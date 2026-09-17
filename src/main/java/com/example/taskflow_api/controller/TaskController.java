@@ -1,8 +1,11 @@
 package com.example.taskflow_api.controller;
 
+import com.example.taskflow_api.dto.CreateTaskRequest;
 import com.example.taskflow_api.model.Task;
 import com.example.taskflow_api.model.TaskStatus;
 import com.example.taskflow_api.service.TaskService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -43,8 +46,9 @@ public class TaskController {
         }
 
     @PostMapping
-    public Task createTask(@RequestBody Task task){
-            return taskService.createTask(task);
+    @ResponseStatus(HttpStatus.CREATED) // RETURNS 201 CREATED INSTEAD OF 200
+    public Task createTask(@Valid @RequestBody  CreateTaskRequest request){
+            return taskService.createTask(request);
     }
 
     // Patch task status by id
